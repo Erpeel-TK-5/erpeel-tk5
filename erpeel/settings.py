@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-we+iklo62n-#(ek7#9^iprii%(x-^s&y@l6q7zcleb7ak34y!r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['erpeel-tk5.up.railway.app']
 
 
 # Application definition

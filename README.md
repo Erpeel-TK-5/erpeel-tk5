@@ -1,6 +1,7 @@
 # Erpeel-TK 5
 
-Repository Kelompok Erpeel untuk TK 5 RPL
+Repository Kelompok Erpeel untuk TK 5 RPL.
+Link deployment : erpeel-tk5.up.railway.app
 
 ## Anggota Kelompok Erpeel
 1. 2006535016 - Romi Fadhurrohman Nabil

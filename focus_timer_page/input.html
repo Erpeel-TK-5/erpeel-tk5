@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+   <body>
+      <head>
+         <title>Timer Duration</title>
+      </head>
+      <p>Add your timer duration:</p>
+      <form id="formFocusTimer">
+         Hours:<br> <input type="number" name="hours" autofocus data-autosave-url="http://localhost:3000/save-profile">
+         <br>
+         Minutes:<br> <input type="number" name="minutes" data-autosave-url="http://localhost:3000/save-profile">
+         <br>
+         Seconds:<br> <input type="number" name="seconds" autofocus data-autosave-url="http://localhost:3000/save-profile">
+         <input type="button" value="Start Timer" onclick="Redirect();" />
+      </form>
+      <script>
+         function Redirect() {
+            document.getElementById("formFocusTimer").submit();
+            window.location = "file:///D:/Folder%20untuk%20KULIAH/RPL/erpeel-tk5/focus_timer_page/index.html";
+         }
+      </script>
+   </body>
+</html>

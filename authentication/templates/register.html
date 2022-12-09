@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container" style="margin-top: 50px; text-align: center;">
+    <div id="alert_required_fields" class="container-fluid p-0"></div>
+    {% for message in messages %}
+    <div class="container-fluid p-0">
+        <div class="alert alert-danger {{ message.tags }} alert-dismissible" role="alert" >
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="True">&times;</span>
+        </button>
+        {{ message }}
+        </div>
+    </div>
+    {% endfor %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Form Register Pemain</title>
+    </head>
+<body>
+    <h2>Form Register Pemain</h2>
+    <form action="" method="post">
+        {%csrf_token%}
+        {{ form.as_p }}
+        <button type="submit">
+            Register
+        </button>
+    </form>
+</body>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" ></script>
+<script>
+        $(document).ready(function () {
+            var allRequiredInput = $("input[required]").add('textarea');
+            allRequiredInput.on('invalid', function(){
+                console.log("halo kak")
+                alert_required_fields.innerHTML = `
+                                    <div class="container-fluid p-0">
+                                        <div class="alert alert-danger {{ message.tags }} alert-dismissible" role="alert" >
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="True">&times;</span>
+                                        </button>
+                                        Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu
+                                        </div>
+                                    </div>`
+            });
+        });
+    </script>
+{% endblock content %}

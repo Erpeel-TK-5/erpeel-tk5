@@ -54,9 +54,12 @@
         for (let x in setNama) {
             let li = document.createElement('li')
             let pembuat = document.createElement('h1');
-            
-            pembuat.innerHTML = `${setNama[x]}`;
-            li.appendChild(pembuat)
+            let temp_link = document.createElement('a')
+            let nama = setNama[x]
+            temp_link.href = nama
+            pembuat.innerHTML = `${nama}`;
+            temp_link.appendChild(pembuat)
+            li.appendChild(temp_link)
             
             list.appendChild(li)
         }

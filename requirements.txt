@@ -1,63 +1,16 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Public Event</title>
-
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-          crossorigin="anonymous">
-</head>
-<body>
-<main class="container">
-    <div class="row text-center justify-content-center">
-        <div class="col">
-            <h1 class="display-4">User yang Menampilkan Public Event: </h1>
-            <section id="section">
-                <ul id="event"></ul>
-            </section>
-        </div>
-    </div>
-</main>
-</body>
-<script>
-    const API_URL = "https://strapi-production-ef0a.up.railway.app/api"
-
-    async function fetchPosts() {
-        const response = await fetch(`${API_URL}/events`)
-        let data = await response.json()
-
-        if (response) {
-            hideloader()
-        }
-        show(data)
-    }
-
-    function hideloader() {
-        document.getElementById('loading').style.display = 'none';
-    }
-    function show(data) {
-        const ul = document.getElementById('event');
-        const list = document.createDocumentFragment();
-        data.map(function (post) {
-            let li = document.createElement('li');
-            let pembuat = document.createElement('h1');
-            let pub = document.createElement('p');
-            pembuat.innerHTML = `${post.data.attributes.dibuatOleh}`;
-            pub.innerHTML = `${post.data.attributes.isPublic}`;
-            li.appendChild(pembuat);
-            list.appendChild(li);
-        });
-
-        ul.appendChild(list);
-    }
-</script>
-</html>
-
-
-https://0a04e1e24d0f8378239582a5f78fc771c0a7bc0c59a5e125c05da47f81d51756662a4ded3c26e78fa033fca3d0d076863d48ac1b74d63a78b5ccd177ac55c9bc7c94692d962e10533d377963b151500a08629d83466843fae102f4784c9dfc3ddf880ee51abeba58fb02fe4fdb7e6f8387942c42391ac58c7b3f18bc0d5de275/strapi-production-ef0a.up.railway.app/api/calendar-users
-https://strapi-production-ef0a.up.railway.app/api/calendar-users
+asgiref==3.5.2
+certifi==2022.6.15
+charset-normalizer==2.1.1
+dj-database-url==1.0.0
+Django==4.1
+gunicorn==20.1.0
+idna==3.3
+psycopg2-binary==2.9.3
+pytz==2022.2.1
+requests==2.28.1
+six==1.16.0
+sqlparse==0.4.2
+typed-ast==1.5.4
+urllib3==1.26.11
+whitenoise==6.2.0
+wrapt==1.14.1

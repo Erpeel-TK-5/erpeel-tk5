@@ -89,7 +89,10 @@ def register(request):
                 error_list = api_response.get('error').get('details').get('errors')
                 error_messages = ""
                 for error in error_list:
-                    error_messages += error.get('message') + ", "
+                    if error.get('message') == "This attribute must be unique":
+                        error_messages += error.get('path')[0] + error.get('message')[14:] + ", "
+                    else:
+                        error_messages += error.get('message') + ", "
                 messages.info(request, error_messages[:-2])
                 return render(request, 'register.html', response)
              request.session['uid'] = api_response.get('data').get('id')

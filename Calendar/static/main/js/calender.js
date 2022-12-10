@@ -2,15 +2,23 @@
 const token = "Bearer 0a04e1e24d0f8378239582a5f78fc771c0a7bc0c59a5e125c05da47f81d51756662a4ded3c26e78fa033fca3d0d076863d48ac1b74d63a78b5ccd177ac55c9bc7c94692d962e10533d377963b151500a08629d83466843fae102f4784c9dfc3ddf880ee51abeba58fb02fe4fdb7e6f8387942c42391ac58c7b3f18bc0d5de275"
 async function fetchPosts(nama) {
     const API_URL = `https://strapi-production-ef0a.up.railway.app/api/calendar-users/${nama}/?populate=*`
+    const API_U = `https://strapi-production-ef0a.up.railway.app/api/calendar-users/${nama}`
     const response = await fetch(`${API_URL}`, {headers:{
         'Authorization': token}
         },
         
     )
+    const resp = await fetch(`${API_U}`, {headers:{
+        'Authorization': token}
+        },
+        
+    )
     let data = await response.json()
-    calender(data.data.attributes.listEvent.data, data.data.attributes)
+    let data2 = await resp.json()
+    calender(data.data.attributes.listEvent.data, data2.data)
 }
 function calender(data, orangData) {
+    console.log(orangData.attributes)
     let mapData = new Map()
     const database = new Map()
     for (let x in data) {
@@ -51,7 +59,7 @@ function calender(data, orangData) {
     that.$eventName = document.getElementsByClassName('event-name')[0];
     that.$isPublic = document.getElementById('public')
     that.$isRecurring = document.getElementById('recurring')
-    that.$notes = document.getElementsByClassName('notes')
+    that.$notes = document.getElementsByClassName('notes')[0]
     var currentYear = new Date().getFullYear();
     var startDay,endDay,tableRow, tableData;
     var calenderArray = [];
@@ -108,8 +116,8 @@ function calender(data, orangData) {
        
        console.log(storedData)
        console.log(keduaStoredData)
-        if(storedData) {
-            calenderData = storedData;
+        if(keduaStoredData) {
+            calenderData = keduaStoredData;
         }
         else
             calenderData = {};
@@ -160,7 +168,7 @@ function calender(data, orangData) {
                     tableData.innerHTML += '<br >' + '<div style = "padding-top: 30%">' + 'Today !!!' + '</div>';
                 }
                 if(calenderData[calenderArray[n]]) {
-                    calenderData = storedData;
+                    calenderData = keduaStoredData;
                     for (var p=0; p < calenderData[calenderArray[n]].length ; p++) {
                         var addEventDiv = document.createElement('div');
                         addEventDiv.id = 'event-on ' + calenderArray[n];
@@ -199,32 +207,36 @@ function calender(data, orangData) {
         var fromVal = that.$from.value;
         var toVal = that.$to.value;
         var tan = that.yearCombo.selectedOptions[0].value+"-"+that.monthCombo.options.selectedIndex+"-"+that.selectedDate+" "
-        var tanMul = new Date(`${tan}${fromVal}`)
+        var tanMul = (new Date(`${tan}${fromVal}`))
         var tanAkh = new Date(`${tan}${toVal}`)
         console.log(that.$isPublic.value)
         console.log(that.$isRecurring.value)
         var pub = (that.$isPublic.value === 'true')
         var rec = (that.$isRecurring.value === 'true')
         var not = that.$notes.value
+        var striData = {"data":orangData}
         var dataJson = {"data":
             {"title":eventNameVal,
-            "startDate":tanMul.toJSON,
-            "endDate":tanAkh.toJSON,
+            "startDate":tanMul,
+            "endDate":tanAkh,
             "isPublic":pub,
             "isRecurring":rec,
             "notes":not,
-            "dibuatOleh":orangData}
+            "dibuatOleh":striData}
         }
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "https://strapi-production-ef0a.up.railway.app/api/events/?populate=*", true)
-        xhr.setRequestHeader('Authorization', token);
-        xhr.send(JSON.stringify({value:dataJson}))
+        console.log(JSON.stringify(dataJson))
+        var url = "https://strapi-production-ef0a.up.railway.app/api/events/?populate=*";
+        fetch (url, {
+            headers: {"Authorization":token,'Content-Type': 'application/json'},
+            method: "POST",
+            body: JSON.stringify(dataJson)
+        }).then(response => response.json())  // convert to json
+        .then(json => console.log(json))
         var content =  eventNameVal + ' ' + 'From'+ ' '+ fromVal +' '+ 'TO' + ''+ toVal +'<br>';
         if( !calenderData[selectedDate]) {
             calenderData[selectedDate] = [];
         }
         calenderData[that.selectedDate].push(content);
-        window.localStorage.setItem('year-'+that.yearCombo.selectedOptions[0].value+''+'month-'+that.monthCombo.options.selectedIndex, JSON.stringify(calenderData));
        
        clearModal();
         calculateDays();

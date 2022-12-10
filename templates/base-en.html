@@ -23,16 +23,16 @@
 
         <nav>
             <ul>
-                <li><a href="/#jump-daftar">Daftar</a></li>
-                <li><a href="/calendar">Kalender</a></li>
+                <li><a href="/#jump-daftar">Start</a></li>
+                <li><a href="">Calendar</a></li>
                 <li><a href="/focus-timer">Focus Timer</a></li>
                 {% if not request.session.uid %}
                 <li class="nav-only-desktop">
-                    <a href="/user/auth" class="button fit-content" style="height: fit-content; margin: 0; padding: 0.6em 1em;">Masuk</a>
+                    <a href="/user/auth" class="button fit-content" style="height: fit-content; margin: 0; padding: 0.6em 1em;">Sign In</a>
                 </li>
                 <div class="nav-dropdown-buttons nav-only-mobile">
                     <a href="/user/auth" class="nav-only-mobile button btn-dashboard">
-                        Masuk
+                        Sign In
                     </a>
                 </div>
                 {% else %}

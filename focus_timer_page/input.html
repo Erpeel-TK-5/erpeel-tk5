@@ -4,7 +4,7 @@
       <head>
          <title>Timer Duration</title>
       </head>
-      <p>Add your timer duration:</p>
+      <h3>Add your timer duration:</h3>
       <form id="formFocusTimer">
         Hours:<br> <input type="number" name="hours" min="0" value="0" id="hours"><br>
         Minutes:<br> <input type="number" name="minutes" min="0" value="0" id="minutes">
@@ -24,13 +24,6 @@
             window.location.assign(`index.html?id=${hour}:${minute}:${second}`);
             window.alert(hour + "-" + minute + "-" + second);
         };
-        function Redirect() {
-            sdocument.getElementById("formFocusTimer").submit();
-            var hours = document.getElementsById('hours').val();
-            window.alert(hours);
-
-            window.location.assign('index.html');
-        }
       </script>
    </body>
 </html>

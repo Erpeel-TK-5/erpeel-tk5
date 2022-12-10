@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+   <body>
+      <head>
+         <title>Edit My Profile</title>
+      </head>
+      <h2>Edit Your Profile Here:</h2>
+      <form id="formEditProfile">
+        First Name:<br> <input type="text" name="first_name" id="first_name"><br>
+        Last Name:<br> <input type="text" name="last_name" id="last_name"><br>
+        Age:<br> <input type="number" name="age" min="0" value="0" id="seconds"><br>
+        Description:<br> <input type="text" name="description" id="description"><br>
+        <br>
+        <input type="submit" value="Submit Changes" />
+         
+      </form>
+      <script>
+        formEditProfile.onsubmit = async (e) => {
+            e.preventDefault();
+            fn = formEditProfile.first_name.value;
+            ln = formEditProfile.last_name.value;
+            age = formEditProfile.age.value;
+            desc = formEditProfile.description.value;
+            window.location.assign(`index.html?id=${fn}-${ln}-${age}-${desc}`);
+        };
+      </script>
+   </body>
+</html>

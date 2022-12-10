@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<head>
+   <title>Change Timer Duration</title>
+</head>
+{% endblock meta %}
+
+{% block content %}
+<body>
+   <p>Insert Timer Duration:</p>
+   <form id="formFocusTimer">
+     Hours:<br> <input type="number" name="hours" min="0" value="0" id="hours"><br>
+     Minutes:<br> <input type="number" name="minutes" min="0" value="0" id="minutes">
+     <br>
+     Seconds:<br> <input type="number" name="seconds" min="0" value="0" id="seconds"><br>
+     <br>
+     <input type="submit" value="Start Timer" />
+      
+      
+   </form>
+</body>
+{% endblock content %}
+
+{% block script %}
+<script>
+   function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+         const cookies = document.cookie.split(';');
+         for (let i = 0; i < cookies.length; i++) {
+               const cookie = cookies[i].trim();
+               if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+               }
+            }
+         }
+        return cookieValue;
+      }
+   const csrftoken = getCookie('csrftoken');
+   formFocusTimer.onsubmit = async (e) => {
+       e.preventDefault();
+       hour = formFocusTimer.hours.value;
+       minute = formFocusTimer.minutes.value;
+       second = formFocusTimer.seconds.value;
+       $.ajax({
+                    url: "/focus-timer/session-update",
+                    type: 'POST',
+                    data: {
+                     hour: hour,
+                     minute: minute,
+                     second: second,
+                     csrfmiddlewaretoken: csrftoken
+                  },
+                }).done(function(response) {
+                  Redirect();
+                })
+   };
+   function Redirect() {
+       window.location.assign('/focus-timer');
+   }
+ </script>
+{% endblock script %}

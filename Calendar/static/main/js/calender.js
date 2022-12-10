@@ -1,6 +1,7 @@
-const API_URL = "https://strapi-production-ef0a.up.railway.app/api/calendar-users/1/?populate=*"
+
 const token = "Bearer 0a04e1e24d0f8378239582a5f78fc771c0a7bc0c59a5e125c05da47f81d51756662a4ded3c26e78fa033fca3d0d076863d48ac1b74d63a78b5ccd177ac55c9bc7c94692d962e10533d377963b151500a08629d83466843fae102f4784c9dfc3ddf880ee51abeba58fb02fe4fdb7e6f8387942c42391ac58c7b3f18bc0d5de275"
-async function fetchPosts() {
+async function fetchPosts(nama) {
+    const API_URL = `https://strapi-production-ef0a.up.railway.app/api/calendar-users/${nama}/?populate=*`
     const response = await fetch(`${API_URL}`, {headers:{
         'Authorization': token
     }})
@@ -8,6 +9,7 @@ async function fetchPosts() {
     calender(data.data.attributes.listEvent.data)
 }
 function calender(data) {
+    console.log(data)
     let mapData = new Map()
     const database = new Map()
     for (let x in data) {

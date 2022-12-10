@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'homepage',
     'PublicEvent',
     'Calendar',
+    'authentication',
 ]
 
 MIDDLEWARE = [

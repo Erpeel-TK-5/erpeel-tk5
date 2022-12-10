@@ -1,1 +1,0 @@
-web: python manage.py migrate && gunicorn erpeel.wsgi

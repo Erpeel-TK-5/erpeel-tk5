@@ -16,7 +16,7 @@ const hours = parseInt(hour);
 const minutes = parseInt(minute);
 const seconds = parseInt(second);
 
-timer.textContent = `timer ends on ${hours}:${minutes}:${seconds}`;
+timer.textContent = `timer ends on ${hours}h:${minutes}m:${seconds}s`;
 
 const duration = hours * 3600 * 1000 + minutes * 60 * 1000 + seconds * 1000;
 const futureTime = new Date().getTime() + duration;

@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'homepage',
+    'PublicEvent',
+    'Calendar',
     'authentication',
     'focus_timer',
 ]

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+    <meta charset="UTF-8">
+    <title>Calender Project</title>
+    <script type="application/javascript" src="{% static 'main/js/calender.js' %}"></script>
+    <link type="text/css" rel="stylesheet" href="{% static 'main/css/calenderstyling.css' %}">
+    <script type="text/css" rel="calender.css"></script>
+{% endblock meta %}
+{% block content %}
+<body>
+
+<div style="
+    margin-top: 50px;
+">
+<select id="month" class="dropdown-toggle" ></select>
+<span><select id="year" class="dropdown-toggle"></select></span>
+    <span id ="month-and-year"></span>
+</div>
+<div id="table-div"></div>
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+       <div  class="header"><span class="close">&times;</span>
+        <b style="font-size: 31px">Event Creator</b>
+           </div>
+             <div class="fieldset">
+                <div class='col-25'>Event Name</div>
+                 <div class="col-75">
+                     <input class="input-class event-name">
+                 </div>
+
+            </div>
+            <div class="fieldset">
+                <div class="col-25">From</div>
+                <div class="col-75">
+                    <input  type="time" class="from-val">
+                </div>
+            </div>
+            <div class="fieldset">
+                <div class="col-25">TO</div>
+                <div class="col-75">
+                    <input type="time" class="to-val">
+                </div>
+            </div>
+            <div class="fieldset">
+                <div class="col-25">isPublic</div>
+                <div class="col-75">
+                    <select id="public" role="switch" aria-checked="false">
+                        <option>true</option>
+                        <option selected>false</option>
+                    </select>
+                </div>
+            </div>
+            <div class="fieldset">
+                <div class="col-25">isRecurring</div>
+                <div class="col-75">
+                    <select id="recurring" role="switch" aria-checked="false">
+                        <option>true</option>
+                        <option selected>false</option>
+                    </select>
+                </div>
+            </div>
+            <div class="fieldset">
+                <div class="col-25">Notes</div>
+                <div class="col-75">
+                    <input  type="text" class="notes">
+                </div>
+            </div>
+            <div class=" fieldset btn-fields">
+                <button class="button-grp-modal btn-danger cancel-btn">Cancel</button>
+                <button class="button-grp-modal btn-primary save-btn">Save</button>
+            </div>
+    </div>
+</div>
+
+
+</div>
+
+</body>
+<script>
+    var nama = '{{id}}'
+    fetchPosts(nama);
+</script>
+{% endblock content %}

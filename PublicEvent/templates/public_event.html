@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <meta charset="UTF-8">
+    <title>Public Event</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+{% endblock meta %}
+{% block content %}
+<body>
+<main class="container">
+    <div class="row text-center justify-content-center">
+        <div class="col">
+            <h1 class="display-4">User yang Menampilkan Public Event: </h1>
+            <section id="section">
+                <ul id="event" ></ul>
+            </section>
+        </div>
+    </div>
+</main>
+</body>
+
+<script>
+
+    const API_URL = "https://strapi-production-ef0a.up.railway.app/api/events/?populate=*"
+    const token = "Bearer 0a04e1e24d0f8378239582a5f78fc771c0a7bc0c59a5e125c05da47f81d51756662a4ded3c26e78fa033fca3d0d076863d48ac1b74d63a78b5ccd177ac55c9bc7c94692d962e10533d377963b151500a08629d83466843fae102f4784c9dfc3ddf880ee51abeba58fb02fe4fdb7e6f8387942c42391ac58c7b3f18bc0d5de275"
+    async function fetchPosts() {
+        const response = await fetch(`${API_URL}`, {headers:{
+            'Authorization': token
+        }})
+        let data = await response.json()
+        show(data.data)
+    }
+
+    function show(data) {
+        const ul = document.getElementById('event');
+        const list = document.createDocumentFragment();
+        let setNama = new Set()
+
+        data.map(function (post) {
+            let pub = post.attributes.isPublic;
+
+            if (pub) {
+                setNama.add(post.attributes.dibuatOleh.data.attributes.nama);
+            }
+        });
+
+        setNama = Array.from(setNama)
+
+        for (let x in setNama) {
+            let li = document.createElement('li')
+            let pembuat = document.createElement('h1');
+            let temp_link = document.createElement('a')
+            let nama = setNama[x]
+            temp_link.href = nama
+            pembuat.innerHTML = `${nama}`;
+            temp_link.appendChild(pembuat)
+            li.appendChild(temp_link)
+            
+            list.appendChild(li)
+        }
+
+        ul.appendChild(list);
+
+    }
+    fetchPosts()
+</script>
+{% endblock content %}

@@ -22,5 +22,6 @@ urlpatterns = [
     path('public-event/', include('PublicEvent.urls')),
     path('calendar/', include('Calendar.urls')),
     path("user/", include('authentication.urls')),
-    path("focus-timer/", include('focus_timer.urls'))
+    path("focus-timer/", include('focus_timer.urls')),
+    path("events/", include('events.urls')),
 ]

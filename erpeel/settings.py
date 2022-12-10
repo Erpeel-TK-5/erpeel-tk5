@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'Calendar',
     'authentication',
     'focus_timer',
+    'events',
 ]
 
 MIDDLEWARE = [

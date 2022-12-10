@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Focus Timer</title>
+  <!-- styles -->
+  <link rel="stylesheet" href="{% static 'main/css/styles.css' %}" />
+</head>
+{% endblock meta %}
+{% block content %}
+  <body>
+    <section class="section-center">
+      <!-- image -->
+      <article class="timer-img">
+        <img src="{% static 'main/images/timer.jpeg' %}" alt="timer" />
+      </article>
+      <!-- info -->
+      <article class="timer-info">
+        <h3>Focus Timer</h3>
+        <h4 class="timer">
+          Durasi Timer: {{ hours }}:{{ mins }}:{{ secs }}
+        </h4>
+        <div class="deadline">
+          <!-- hours -->
+          <div class="deadline-format">
+            <div>
+              <h4 id="hours">{{ hours }}</h4>
+              <span>jam</span>
+            </div>
+          </div>
+          <!-- end of hours -->
+          <!-- minutes -->
+          <div class="deadline-format">
+            <div>
+              <h4 id="minutes">{{ mins }}</h4>
+              <span>menit</span>
+            </div>
+          </div>
+          <!-- end of minutes -->
+          <!-- seconds -->
+          <div class="deadline-format">
+            <div>
+              <h4 id="seconds">{{ secs }}</h4>
+              <span>detik</span>
+            </div>
+          </div>
+          <!-- end of seconds -->
+        </div>
+        <p></p>
+        <button class="btn btn-hero" id="btn" onclick="Restart();">Ulang Timer</button>
+        <p></p>
+        <button class="btn btn-hero" id="btn" onclick="GoBack();">Ubah Durasi Timer</button>
+      </article>
+    </section>
+  </body>
+{% endblock content %}
+{% block script %}  
+<!-- javascript -->
+<script src="{% static 'main/js/app.js' %}"></script>
+<script>
+  $.post('/api/calendar-users', {}, function (data){
+    window.alert(data);
+  })
+</script>
+<script>
+  function Restart() {
+     location.reload();
+  }
+</script>
+<script>
+  function GoBack() {
+    window.location.assign('/focus-timer/edit');
+  }
+</script>
+{% endblock script %}

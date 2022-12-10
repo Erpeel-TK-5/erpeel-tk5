@@ -1,0 +1,79 @@
+{% extends 'base-en.html' %}
+{% load static %}
+
+{% block meta %}
+    <meta charset="UTF-8">
+    <title>Jadwalku</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <script type="application/javascript" src="{% static 'main/js/script.js' %}"></script>
+{% endblock meta %}
+
+{% block content %}
+<div class="content-home">
+    <div class="home-top">
+        <div class="home-top-color-filter">
+            <div class="only-desktop">
+                <h1>Jadwalku<br>Calendar and Scheduling</h1>
+                <p style="color: #263238;">Manage your activities easily with Jadwalku</p>
+                <a href="/#jump-daftar" class="button fit-content" style="border-radius: 50px; padding: 10px 70px">S T A R T</a>
+            </div>
+            <object class="only-desktop" data="{% static 'main/svg/Calendar-rafiki.svg' %}" type="image/svg+xml"></object>
+            <div class="only-mobile">
+                <object data="{% static 'main/svg/homepage-svg1.svg' %}" type="image/svg+xml" style="max-width: 100%; width: 100%"></object>
+                <div class="only-mobile">
+                    <h1>Jadwalku<br>Calendar and Scheduling</h1>
+                    <p style="color: #263238;">Manage your activities easily with Jadwalku</p>
+                    <a href="/#jump-daftar" class="button fit-content" style="border-radius: 50px; padding: 10px 70px">S T A R T</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="home-middle">
+        <div class="home-middle-top">
+            <object data="{% static 'main/svg/Team work-amico 1.svg' %}" type="image/svg+xml"></object>
+            <div>
+                <h2 style="color: #FF725E;">What Is Jadwalku?</h2>
+                <p style="color: #263238;">Jadwalku is a productivity app with various calendar and scheduling features. Collaborate in your schedule by sharing event reminders. Use focus timer to help you concentrate on your daily tasks.</p>
+            </div>
+        </div>
+        
+        <div id="jump-daftar">
+            <div class="home-middle-bottom">
+                 <div class="home-card-container">
+                    <div class="home-card-top-blank"></div>
+                    <div class="gambar-home-bottom">
+                        <object data="{% static 'main/svg/Work time-cuate 1.svg' %}" type="image/svg+xml" style="max-width: 50%; width: 100%; " ></object>
+                    </div>
+                    <div class="home-card" style="background-color:#FF725E">
+                        <div class="only-desktop">
+                            <h2>CALENDAR</h2>
+                            <p>Mark important dates to help you remember</p>
+                        </div>
+                        <div class="only-mobile">
+                            <h2>CALENDAR</h2>
+                        </div>
+                        <a href="user/auth" class="button fit-content" style="background-color: #1C5188; padding: 10px 40px;">S T A R T</a>
+                    </div>
+                 </div>
+                 <div class="home-card-container">
+                    <div class="home-card-top-blank"></div>
+                    <div class="gambar-home-bottom">
+                        <object data="{% static 'main/svg/Helping a partner-cuate 1.svg' %}" type="image/svg+xml" style="max-width: 50%; width: 100%;"></object>
+                    </div>
+                    <div class="home-card" style="background-color:#FF725E">
+                        <div class="only-desktop">
+                            <h2>EVENTS</h2>
+                            <p>Create event reminders so you don't miss out</p>
+                        </div>
+                        <div class="only-mobile">
+                            <h2>EVENTS</h2>
+                        </div>
+                        <a href="user/auth" class="button fit-content" style="background-color: #1C5188; padding: 10px 40px; ">S T A R T</a>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

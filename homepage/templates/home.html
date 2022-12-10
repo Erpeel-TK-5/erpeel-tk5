@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <meta charset="UTF-8">
+    <title>Jadwalku</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <script type="application/javascript" src="{% static 'main/js/script.js' %}"></script>
+{% endblock meta %}
+
+{% block content %}
+<div class="content-home">
+    <div class="home-top">
+        <div class="home-top-color-filter">
+            <div class="only-desktop">
+                <h1>Jadwalku<br>Kalender dan Penjadwalan</h1>
+                <p style="color: #263238;">Atur segala kesibukanmu dengan mudah<br> menggunakan Jadwalku</p>
+                <a href="/#jump-daftar" class="button fit-content" style="border-radius: 50px; padding: 10px 70px">M U L A I</a>
+            </div>
+            <object class="only-desktop" data="{% static 'main/svg/Calendar-rafiki.svg' %}" type="image/svg+xml"></object>
+            <div class="only-mobile">
+                <object data="{% static 'main/svg/homepage-svg1.svg' %}" type="image/svg+xml" style="max-width: 100%; width: 100%"></object>
+                <div class="only-mobile">
+                    <h1>Jadwalku Kalender dan Penjadwalan</h1>
+                    <p style="color: #263238;">Atur segala kesibukanmu dengan mudah menggunakan Jadwalku</p>
+                    <a href="/#jump-daftar" class="button fit-content" style="border-radius: 50px; padding: 10px 70px">M U L A I</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="home-middle">
+        <div class="home-middle-top">
+            <object data="{% static 'main/svg/Team work-amico 1.svg' %}" type="image/svg+xml"></object>
+            <div>
+                <h2 style="color: #FF725E;">Apa Itu Jadwalku?</h2>
+                <p style="color: #263238;">Jadwalku adalah sebuah aplikasi yang dapat membantu produktivitasmu dengan berbagai fitur pengatur kalender dan penjadwalan. Jadwalku juga bisa digunakan untuk berkolaborasi jadwal sebagai pengingat bersama suatu acara. Gunakan juga focus timer untuk membantumu berkonsentrasi dalam pekerjaan sehari-hari.</p>
+            </div>
+        </div>
+        
+        <div id="jump-daftar">
+            <div class="home-middle-bottom">
+                 <div class="home-card-container">
+                    <div class="home-card-top-blank"></div>
+                    <div class="gambar-home-bottom">
+                        <object data="{% static 'main/svg/Work time-cuate 1.svg' %}" type="image/svg+xml" style="max-width: 50%; width: 100%; " ></object>
+                    </div>
+                    <div class="home-card" style="background-color:#FF725E">
+                        <div class="only-desktop">
+                            <h2>KALENDER</h2>
+                            <p>Tandai tanggal penting agar tidak terlewat</p>
+                        </div>
+                        <div class="only-mobile">
+                            <h2>KALENDER</h2>
+                        </div>
+                        <a href="user/auth" class="button fit-content" style="background-color: #1C5188; padding: 10px 40px;">M U L A I</a>
+                    </div>
+                 </div>
+                 <div class="home-card-container">
+                    <div class="home-card-top-blank"></div>
+                    <div class="gambar-home-bottom">
+                        <object data="{% static 'main/svg/Helping a partner-cuate 1.svg' %}" type="image/svg+xml" style="max-width: 50%; width: 100%;"></object>
+                    </div>
+                    <div class="home-card" style="background-color:#FF725E">
+                        <div class="only-desktop">
+                            <h2>EVENTS</h2>
+                            <p>Buat event pengingat agar tidak ketinggalan satu sama lain.</p>
+                        </div>
+                        <div class="only-mobile">
+                            <h2>EVENTS</h2>
+                        </div>
+                        <a href="user/auth" class="button fit-content" style="background-color: #1C5188; padding: 10px 40px; ">M U L A I</a>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

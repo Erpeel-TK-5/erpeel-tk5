@@ -6,18 +6,31 @@
       </head>
       <p>Add your timer duration:</p>
       <form id="formFocusTimer">
-         Hours:<br> <input type="number" name="hours" autofocus data-autosave-url="http://localhost:3000/save-profile">
-         <br>
-         Minutes:<br> <input type="number" name="minutes" data-autosave-url="http://localhost:3000/save-profile">
-         <br>
-         Seconds:<br> <input type="number" name="seconds" autofocus data-autosave-url="http://localhost:3000/save-profile">
-         <input type="button" value="Start Timer" onclick="Redirect();" />
+        Hours:<br> <input type="number" name="hours" min="0" value="0" id="hours"><br>
+        Minutes:<br> <input type="number" name="minutes" min="0" value="0" id="minutes">
+        <br>
+        Seconds:<br> <input type="number" name="seconds" min="0" value="0" id="seconds"><br>
+        <br>
+        <input type="submit" value="Start Timer" />
+         
+         
       </form>
       <script>
-         function Redirect() {
-            document.getElementById("formFocusTimer").submit();
-            window.location = "file:///D:/Folder%20untuk%20KULIAH/RPL/erpeel-tk5/focus_timer_page/index.html";
-         }
+        formFocusTimer.onsubmit = async (e) => {
+            e.preventDefault();
+            hour = formFocusTimer.hours.value;
+            minute = formFocusTimer.minutes.value;
+            second = formFocusTimer.seconds.value;
+            window.location.assign(`index.html?id=${hour}:${minute}:${second}`);
+            window.alert(hour + "-" + minute + "-" + second);
+        };
+        function Redirect() {
+            sdocument.getElementById("formFocusTimer").submit();
+            var hours = document.getElementsById('hours').val();
+            window.alert(hours);
+
+            window.location.assign('index.html');
+        }
       </script>
    </body>
 </html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Page</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section class="section-center">
+      <!-- image -->
+      <article class="profile-img">
+        <img src="./profile.jpg" alt="profile" />
+      </article>
+      <!-- info -->
+      <article class="profile-info">
+        <h3>My Profile</h3>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+          Reprehenderit molestiae cum libero atque ut voluptate qui consectetur
+          aliquid incidunt voluptatem quos, dolore, non commodi quaerat aliquam
+          eligendi, quisquam totam blanditiis.
+        </p>
+        <h4 class="fn">
+            First Name: -
+        </h4>
+        <h4 class="ln">
+            Last Name: -
+        </h4>
+        <h4 class="age">
+            Age: -
+        </h4>
+        <h4 class="desc">
+            Description: -
+        </h4>
+        <p></p>
+        <button class="btn btn-hero" id="btn" onclick="Edit();">Edit Profile</button>
+        <p></p>
+        <button class="btn btn-hero" id="btn" onclick="LogOut();">Logout</button>
+      </article>
+    </section>
+    <!-- javascript -->
+    <script src="app.js"></script>
+    <script>
+      $.post('/api/calendar-users', {}, function (data){
+        window.alert(data);
+      })
+    </script>
+    <script>
+      function Edit() {
+        window.location.assign('input.html');
+      }
+   </script>
+   <script>
+    function LogOut() {
+      window.location.assign('www.youtube.com');
+    }
+ </script>
+  </body>
+</html>

@@ -2,57 +2,42 @@
 {% load static %}
 
 {% block meta %}
-<title>Daftar Sebagai Peserta</title>
-<link rel="stylesheet" href="{% static 'user_peserta/css/style.css' %}" />
+<title>Buat Event</title>
+<link rel="stylesheet" href="{% static 'events/css/style.css' %}" />
 <link href="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 {% endblock meta %}
 
 {% block content %}
 <div class="content-root">
+    <div id="alert_required_fields" class="container-fluid p-0"></div>
+    {% for message in messages %}
+    <div class="container-fluid p-0">
+        <div class="alert alert-danger {{ message.tags }} alert-dismissible" role="alert" >
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="True">&times;</span>
+        </button>
+        {{ message }}
+        </div>
+    </div>
+    {% endfor %}
     <div class="form-root">
-        <h1 id="judul-form">Calon Peserta</h1>
+        <h1 id="judul-form">Buat Event/Acara</h1>
         <section>
-            <form action="postsignup" method="post" id="form">
+            <form action="" method="post" id="form">
                 {% csrf_token %}
-                <label for="nama-lengkap">Nama Event</label>
-                <input type="text" id="nama-lengkap" name="nama_lengkap" placeholder="Masukkan nama lengkap Anda..."
-                    required>
-                <br />
-
-                <label for="mulai-event">Mulai event</label>
-                <input type="date" id="mulai-event" name="mulai-event" required>
-
-                <label for="selesai-event">Selesai event</label>
-                <input type="date" id="selesai-event" name="selesai-event" required>
-
-                <label for="is-public">Event Public</label>
-                <input type="radio" id="is-public" name="is-public" value="Yes">
-                <label for="yes">YES</label><br>
-                <input type="radio" id="is-public" name="is-public" value="No">
-                <label for="no">NO</label><br>
-
-                <label for="selesai-event">Selesai event</label>
-                <input type="date" id="selesai-event" name="selesai-event" required>
+                {{ form.as_p }}
+                <button type="submit" class="button fit-content submit-btn" style="border-radius: 15px; padding: 10px 70px;">
+                    Buat Event
+                </button>
             </form>
-
-            <p>Sudah punya akun? <a href="signin" style="text-decoration: none; color: #1C5188;">Masuk sekarang</a>
-            <p>
-
-                <button type="button" class="button" id="submitbutton">DAFTAR</button>
-
-            <div class="filler"></div>
-            
-            <script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>
-            <script type="application/javascript" src="{% static 'user_peserta/js/dropdown-jurusan.js' %}"></script>
-            <script type="application/javascript" src="{% static 'user_peserta/js/uuid4.js' %}"></script>
             <script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>
             <script>
                 $('select option:first-child').attr("selected", "selected");
             </script>
         </section>
     </div>
-    <object class="object only-desktop" data="{% static 'user_peserta/svg/Sign up-pana 1.svg' %}"
+    <object class="object only-desktop" data="{% static 'events/svg/Duplicate-pana.svg' %}"
         type="image/svg+xml"></object>
 </div>
 {% endblock content %}

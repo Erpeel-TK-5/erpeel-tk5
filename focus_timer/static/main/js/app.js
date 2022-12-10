@@ -5,22 +5,20 @@ const deadline = document.querySelector('.deadline');
 const items = document.querySelectorAll('.deadline-format h4');
 
 var query = window.location.search.substring(1);
-var code = query.split("=");
-var time = code[1];
-var times = time.split(":");
-var hour = times[0];
-var minute = times[1];
-var second = times[2];
+var hour = document.getElementById('hours').innerHTML;
+var minute = document.getElementById('minutes').innerHTML;
+var second = document.getElementById('seconds').innerHTML;
 
 const hours = parseInt(hour);
 const minutes = parseInt(minute);
 const seconds = parseInt(second);
 
-timer.textContent = `timer ends on ${hours}:${minutes}:${seconds}`;
+timer.textContent = `Durasi timer: ${hours}:${minutes}:${seconds}`;
 
 const duration = hours * 3600 * 1000 + minutes * 60 * 1000 + seconds * 1000;
 const futureTime = new Date().getTime() + duration;
 function getRemaindingTime() {
+  console.log("call");
   const today = new Date().getTime();
   const t = futureTime - today;
   // 1s = 1000ms
@@ -46,7 +44,7 @@ function getRemaindingTime() {
   });
   if (t < 0) {
     clearInterval(countdown);
-    deadline.innerHTML = `<h4 class="expired">sorry, this timer has expired!</h4>`;
+    deadline.innerHTML = `<h4 class="expired">Waktu habis. Tekan tombol "Ulang Timer" jika diperlukan.</h4>`;
   }
 }
 // countdown;

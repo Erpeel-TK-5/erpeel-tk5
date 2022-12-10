@@ -26,7 +26,7 @@ def login(request):
             username = request.POST['username']
             password = request.POST['password']
             headers = {"Authorization": "Bearer fdca0f928bbcc40b67191f73f381c15b9b30cb5a8befe6facb62c503d4d24af3e9c0d1df7a1e7f448c9a992bc7e44d9b905158a602fa68f75ffdd740bc09a9ba342012eb35dda37ea89bba1b28399929b679c28487542aa5f041fa1eb1a3ee323ed6e234ec9e637444426a2b72f0ae336bd1e9e76aa6753c1a97b549c564efdc"}
-            api_response = requests.get('https://strapi-production-ef0a.up.railway.app/api/calendar-users?fields[0]=username&fields[1]=email&fields[2]=password&fields[3]=bahasa', headers=headers).json()
+            api_response = requests.get('https://strapi-production-ef0a.up.railway.app/api/calendar-users?fields[0]=username&fields[1]=email&fields[2]=password&fields[3]=bahasa&fields[4]=durasiFocusTimer', headers=headers).json()
             if api_response.get('error') != None:
                 error_list = api_response.get('error').get('details').get('errors')
                 error_messages = ""
@@ -40,6 +40,7 @@ def login(request):
             email_list = []
             password_list = []
             lang_list = []
+            timer_list = []
             id_list = []
             for user in api_response.get('data'):
                 attrs = user.get('attributes')
@@ -47,6 +48,7 @@ def login(request):
                 email_list.append(attrs.get('email'))
                 password_list.append(attrs.get('password'))
                 lang_list.append(attrs.get('bahasa'))
+                timer_list.append(attrs.get('durasiFocusTimer'))
                 id_list.append(user.get('id'))
             index = -1
             if username in username_list:
@@ -59,6 +61,7 @@ def login(request):
             if index != -1 and password == password_list[index]:
                 request.session['uid'] = id_list[index]
                 request.session['bahasa'] = lang_list[index]
+                request.session['durasi_timer'] = timer_list[index]
                 request.session['isLogin'] = True
                 return redirect('/calendar') #ganti sama url yg nampilin display kalo user ud login
             else:
@@ -98,7 +101,7 @@ def register(request):
              name = request.POST['name']
              lang = get_language()
              headers = {"Authorization": "Bearer fdca0f928bbcc40b67191f73f381c15b9b30cb5a8befe6facb62c503d4d24af3e9c0d1df7a1e7f448c9a992bc7e44d9b905158a602fa68f75ffdd740bc09a9ba342012eb35dda37ea89bba1b28399929b679c28487542aa5f041fa1eb1a3ee323ed6e234ec9e637444426a2b72f0ae336bd1e9e76aa6753c1a97b549c564efdc"}
-             data = {"data": {"username": username, "password": password, "email": email, "nama": name, "bahasa": lang}}
+             data = {"data": {"username": username, "password": password, "email": email, "nama": name, "bahasa": lang, "durasiFocusTimer": 60}}
              api_response = requests.post('https://strapi-production-ef0a.up.railway.app/api/calendar-users', json=data, headers=headers).json()
              if api_response.get('error') != None:
                 error_list = api_response.get('error').get('details').get('errors')
@@ -114,6 +117,7 @@ def register(request):
                 return render(request, 'register-en.html', response)
              request.session['uid'] = api_response.get('data').get('id')
              request.session['bahasa'] = lang
+             request.session['durasi_timer'] = 60
              request.session['isLogin'] = True
              return redirect('/calendar') #ganti sama url yg nampilin display kalo user ud login
         else:

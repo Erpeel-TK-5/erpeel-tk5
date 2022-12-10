@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'homepage',
     'authentication',
+    'focus_timer',
 ]
 
 MIDDLEWARE = [

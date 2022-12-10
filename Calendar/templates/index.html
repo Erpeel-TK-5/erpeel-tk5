@@ -35,21 +35,37 @@
             <div class="fieldset">
                 <div class="col-25">From</div>
                 <div class="col-75">
-                    <input  type="number" class="from-val" min= "1" max = "12">
-                    <select id="from" role="switch" aria-checked="false">
-                        <option>AM</option>
-                        <option selected>PM</option>
-                    </select>
+                    <input  type="time" class="from-val">
                 </div>
             </div>
             <div class="fieldset">
                 <div class="col-25">TO</div>
                 <div class="col-75">
-                    <input type="number" class="to-val" min= "1" max = "12">
-                    <select id="to" role="switch" aria-checked="false">
-                        <option>AM</option>
-                        <option selected>PM</option>
+                    <input type="time" class="to-val">
+                </div>
+            </div>
+            <div class="fieldset">
+                <div class="col-25">isPublic</div>
+                <div class="col-75">
+                    <select id="public" role="switch" aria-checked="false">
+                        <option>true</option>
+                        <option selected>false</option>
                     </select>
+                </div>
+            </div>
+            <div class="fieldset">
+                <div class="col-25">isRecurring</div>
+                <div class="col-75">
+                    <select id="recurring" role="switch" aria-checked="false">
+                        <option>true</option>
+                        <option selected>false</option>
+                    </select>
+                </div>
+            </div>
+            <div class="fieldset">
+                <div class="col-25">Notes</div>
+                <div class="col-75">
+                    <input  type="text" class="notes">
                 </div>
             </div>
             <div class=" fieldset btn-fields">

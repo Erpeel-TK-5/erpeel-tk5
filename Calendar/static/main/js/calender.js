@@ -3,13 +3,14 @@ const token = "Bearer 0a04e1e24d0f8378239582a5f78fc771c0a7bc0c59a5e125c05da47f81
 async function fetchPosts(nama) {
     const API_URL = `https://strapi-production-ef0a.up.railway.app/api/calendar-users/${nama}/?populate=*`
     const response = await fetch(`${API_URL}`, {headers:{
-        'Authorization': token
-    }})
+        'Authorization': token}
+        },
+        
+    )
     let data = await response.json()
-    calender(data.data.attributes.listEvent.data)
+    calender(data.data.attributes.listEvent.data, data.data.attributes)
 }
-function calender(data) {
-    console.log(data)
+function calender(data, orangData) {
     let mapData = new Map()
     const database = new Map()
     for (let x in data) {
@@ -48,6 +49,9 @@ function calender(data) {
     that.$from = document.getElementsByClassName('from-val')[0];
     that.$to = document.getElementsByClassName('to-val')[0];
     that.$eventName = document.getElementsByClassName('event-name')[0];
+    that.$isPublic = document.getElementById('public')
+    that.$isRecurring = document.getElementById('recurring')
+    that.$notes = document.getElementsByClassName('notes')
     var currentYear = new Date().getFullYear();
     var startDay,endDay,tableRow, tableData;
     var calenderArray = [];
@@ -87,6 +91,9 @@ function calender(data) {
         that.$from.value = '';
         that.$to.value = '';
         that.$eventName.value = '';
+        that.$isPublic.value = 'false'
+        that.$isRecurring.value = 'false'
+        that.$notes = ''
         that.modal.myModal.style.display = 'none';
     };
     function calculateDays() {
@@ -101,8 +108,8 @@ function calender(data) {
        
        console.log(storedData)
        console.log(keduaStoredData)
-        if(keduaStoredData) {
-            calenderData = keduaStoredData;
+        if(storedData) {
+            calenderData = storedData;
         }
         else
             calenderData = {};
@@ -153,7 +160,7 @@ function calender(data) {
                     tableData.innerHTML += '<br >' + '<div style = "padding-top: 30%">' + 'Today !!!' + '</div>';
                 }
                 if(calenderData[calenderArray[n]]) {
-                    calenderData = keduaStoredData;
+                    calenderData = storedData;
                     for (var p=0; p < calenderData[calenderArray[n]].length ; p++) {
                         var addEventDiv = document.createElement('div');
                         addEventDiv.id = 'event-on ' + calenderArray[n];
@@ -189,11 +196,30 @@ function calender(data) {
     var saveBtn = document.getElementsByClassName('save-btn')[0];
     saveBtn.addEventListener('click', function () {
         var eventNameVal = that.$eventName.value;
-        var fromMeridiem = document.getElementById('from').value;
-        var toMeridiem = document.getElementById('to').value;
         var fromVal = that.$from.value;
         var toVal = that.$to.value;
-        var content =  eventNameVal + ' ' + 'From'+ ' '+ fromVal+ ' ' + fromMeridiem +' '+ 'TO' + ''+ toVal +' ' +  toMeridiem +'<br>';
+        var tan = that.yearCombo.selectedOptions[0].value+"-"+that.monthCombo.options.selectedIndex+"-"+that.selectedDate+" "
+        var tanMul = new Date(`${tan}${fromVal}`)
+        var tanAkh = new Date(`${tan}${toVal}`)
+        console.log(that.$isPublic.value)
+        console.log(that.$isRecurring.value)
+        var pub = (that.$isPublic.value === 'true')
+        var rec = (that.$isRecurring.value === 'true')
+        var not = that.$notes.value
+        var dataJson = {"data":
+            {"title":eventNameVal,
+            "startDate":tanMul.toJSON,
+            "endDate":tanAkh.toJSON,
+            "isPublic":pub,
+            "isRecurring":rec,
+            "notes":not,
+            "dibuatOleh":orangData}
+        }
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://strapi-production-ef0a.up.railway.app/api/events/?populate=*", true)
+        xhr.setRequestHeader('Authorization', token);
+        xhr.send(JSON.stringify({value:dataJson}))
+        var content =  eventNameVal + ' ' + 'From'+ ' '+ fromVal +' '+ 'TO' + ''+ toVal +'<br>';
         if( !calenderData[selectedDate]) {
             calenderData[selectedDate] = [];
         }

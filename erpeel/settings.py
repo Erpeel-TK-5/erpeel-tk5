@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'authentication',
     'focus_timer',
     'events',
+    'my_profile',
 ]
 
 MIDDLEWARE = [

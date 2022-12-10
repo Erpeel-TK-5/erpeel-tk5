@@ -9,13 +9,16 @@ def index(request):
         mins = (int(request.session['durasi_timer']) - hours * 60) // 60
         secs = (int(request.session['durasi_timer']) - mins * 60)
         response = {"hours": hours, "mins": mins, "secs": secs}
-        print(response)
-        return render(request, 'index.html', response)
+        if request.session['bahasa'] == 'id':
+            return render(request, 'index.html', response)
+        return render(request, 'index-en.html', response)
     return redirect('user/auth')
 
 def edit(request):
     if 'isLogin' in request.session:
-        return render(request, 'input.html')
+        if request.session['bahasa'] == 'id':
+            return render(request, 'input.html')
+        return render(request, 'input-en.html')
     return redirect('user/auth')
 
 def update_session(request):

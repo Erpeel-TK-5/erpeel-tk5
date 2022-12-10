@@ -13,8 +13,6 @@ const hours = parseInt(hour);
 const minutes = parseInt(minute);
 const seconds = parseInt(second);
 
-timer.textContent = `Durasi timer: ${hours}:${minutes}:${seconds}`;
-
 const duration = hours * 3600 * 1000 + minutes * 60 * 1000 + seconds * 1000;
 const futureTime = new Date().getTime() + duration;
 function getRemaindingTime() {
@@ -44,7 +42,26 @@ function getRemaindingTime() {
   });
   if (t < 0) {
     clearInterval(countdown);
-    deadline.innerHTML = `<h4 class="expired">Waktu habis. Tekan tombol "Ulang Timer" jika diperlukan.</h4>`;
+    console.log(navigator.languages);
+    deadline.innerHTML = `<div class="deadline-format">
+    <div>
+      <h4 id="hours">00</h4>
+    </div>
+  </div>
+  <!-- end of hours -->
+  <!-- minutes -->
+  <div class="deadline-format">
+    <div>
+      <h4 id="minutes">00</h4>
+    </div>
+  </div>
+  <!-- end of minutes -->
+  <!-- seconds -->
+  <div class="deadline-format">
+    <div>
+      <h4 id="seconds">00</h4>
+    </div>
+  </div>`;
   }
 }
 // countdown;

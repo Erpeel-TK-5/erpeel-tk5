@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base-en.html' %}
 {% load static %}
 
 {% block meta %}
@@ -21,14 +21,14 @@
       <article class="timer-info">
         <h3>Focus Timer</h3>
         <h4 class="timer">
-          Durasi Timer: {{ hours }}:{{ mins }}:{{ secs }}
+          Timer Duration: {{ hours }}:{{ mins }}:{{ secs }}
         </h4>
         <div class="deadline">
           <!-- hours -->
           <div class="deadline-format">
             <div>
               <h4 id="hours">{{ hours }}</h4>
-              <span>jam</span>
+              <span>hours</span>
             </div>
           </div>
           <!-- end of hours -->
@@ -36,7 +36,7 @@
           <div class="deadline-format">
             <div>
               <h4 id="minutes">{{ mins }}</h4>
-              <span>menit</span>
+              <span>minutes</span>
             </div>
           </div>
           <!-- end of minutes -->
@@ -44,15 +44,15 @@
           <div class="deadline-format">
             <div>
               <h4 id="seconds">{{ secs }}</h4>
-              <span>detik</span>
+              <span>seconds</span>
             </div>
           </div>
           <!-- end of seconds -->
         </div>
         <p></p>
-        <button class="btn btn-hero" id="btn" onclick="Restart();">Ulang Timer</button>
+        <button class="btn btn-hero" id="btn" onclick="Restart();">Reset Timer</button>
         <p></p>
-        <button class="btn btn-hero" id="btn" onclick="GoBack();">Ubah Durasi Timer</button>
+        <button class="btn btn-hero" id="btn" onclick="GoBack();">Change Timer Duration</button>
       </article>
     </section>
   </body>

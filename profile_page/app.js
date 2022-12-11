@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const formResponses = document.getElementsByName('formEditProfile');
+
 const fn = document.querySelector('.fn');
 const ln = document.querySelector('.ln');
 const age = document.querySelector('.age');
@@ -8,7 +10,7 @@ const desc = document.querySelector('.desc');
 var query = window.location.search.substring(1);
 var code = query.split("=");
 var value = code[1];
-var values = value.split(":");
+var values = value.split("-");
 var age_int = values[2];
 const fn_val = values[0];
 const ln_val = values[1];

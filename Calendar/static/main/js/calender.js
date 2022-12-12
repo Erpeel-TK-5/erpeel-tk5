@@ -1,6 +1,7 @@
 
-const token = "Bearer 0a04e1e24d0f8378239582a5f78fc771c0a7bc0c59a5e125c05da47f81d51756662a4ded3c26e78fa033fca3d0d076863d48ac1b74d63a78b5ccd177ac55c9bc7c94692d962e10533d377963b151500a08629d83466843fae102f4784c9dfc3ddf880ee51abeba58fb02fe4fdb7e6f8387942c42391ac58c7b3f18bc0d5de275"
 async function fetchPosts(nama) {
+    const token = "Bearer 0a04e1e24d0f8378239582a5f78fc771c0a7bc0c59a5e125c05da47f81d51756662a4ded3c26e78fa033fca3d0d076863d48ac1b74d63a78b5ccd177ac55c9bc7c94692d962e10533d377963b151500a08629d83466843fae102f4784c9dfc3ddf880ee51abeba58fb02fe4fdb7e6f8387942c42391ac58c7b3f18bc0d5de275"
+
     const API_URL = `https://strapi-production-ef0a.up.railway.app/api/calendar-users/${nama}/?populate=*`
     const API_U = `https://strapi-production-ef0a.up.railway.app/api/calendar-users/${nama}`
     const response = await fetch(`${API_URL}`, {headers:{
@@ -15,10 +16,10 @@ async function fetchPosts(nama) {
     )
     let data = await response.json()
     let data2 = await resp.json()
-    calender(API_URL,data.data.attributes.listEvent.data, data2.data, nama)
+    calender(API_URL,data.data.attributes.listEvent.data, data2.data, nama, token)
 }
 
-function calender(API_URL, data, orangData, nama) {
+function calender(API_URL, data, orangData, nama, token) {
 
     var that = this;
     var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -191,6 +192,7 @@ function calender(API_URL, data, orangData, nama) {
             });
             tableRow.appendChild(tableData);
         }
+        console.log(calenderData)
 
     }
     // TO set listener for each event card
@@ -201,7 +203,7 @@ function calender(API_URL, data, orangData, nama) {
         })
     })
     var saveBtn = document.getElementsByClassName('save-btn')[0];
-    console.log(that.yearCombo.selectedOptions[0].value+"-"+that.monthCombo.options.selectedIndex+"-"+that.selectedDate+" ")
+    console.log(calenderData)
     saveBtn.addEventListener('click', function () {
         var eventNameVal = that.$eventName.value;
         var fromVal = that.$from.value;
@@ -233,7 +235,7 @@ function calender(API_URL, data, orangData, nama) {
         }
         var url = `https://strapi-production-ef0a.up.railway.app/api/events/?id=${nama}`;
         
-        const pal = data.slice()
+        const pal = data
         setTimeout(async() => { const rawResponse = await fetch (url, {
             headers: {"Authorization":token,'Content-Type': 'application/json'},
             method: "POST",
@@ -250,12 +252,15 @@ function calender(API_URL, data, orangData, nama) {
                 body: JSON.stringify({"data":{"listEvent":pal}}) 
             }
         )).then(response => response.json()).then(json=>console.log(json))}, 5000) 
+        console.log({"listEvent":pal})
         var content =  eventNameVal + ' ' + 'From'+ ' '+ fromVal +' '+ 'TO' + ''+ toVal +'<br>';
         if( !calenderData[selectedDate]) {
             calenderData[selectedDate] = [];
         }
         calenderData[that.selectedDate].push(content);
-       
+        console.log(calenderData)
+       database.set(`year-${that.yearCombo.selectedOptions[0].value}month-${that.monthCombo.options.selectedIndex}`, calenderData)
+       console.log(database)
        clearModal();
         calculateDays();
 

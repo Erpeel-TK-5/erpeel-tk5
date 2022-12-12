@@ -1,53 +1,70 @@
+<!-- {% extends 'base.html' %}
+{% load static %}
+
+{% block meta %} -->
 <!DOCTYPE html>
-<html>
-   <body>
-      <head>
-         <title>Edit My Profile</title>
-      </head>
-      <h2>Edit Your Profile Here:</h2>
-      <form action="FormEditProfile" method="POST">
-        {% csrf_token %}
-        {{ form }}
-        First Name  :<br> <input type="text" name="first_name" id="first_name"><br>
-        Last Name   :<br> <input type="text" name="last_name" id="last_name"><br>
-        Age         :<br> <input type="number" name="age" min="0" value="0" id="seconds"><br>
-        Description :<br> <input type="text" name="description" id="description"><br>
-        <br>
-        <input type="submit" value="Submit Changes" />
-         
-      </form>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-      <script>
-         
-         // const API_URL = `https://strapi-production-ef0a.up.railway.app/`;
-         // const token = 'Bearer f9f56b73b73070e6006352dc14cce6ee5e74840295ecc1dff3fd288029acf9844d60e6849c1f34cc7d510a2007367962dd5d6574c46e33307572782c9a592552609ec4b892294b19196e460e09b3760046365a4fcf4d2966d886cf0351cafc630d8323ad1fc5ec3539c7de011bc855ea6fd51783b3b59f9e2a29b4485b5d6f52';
-         // let path = `api/calendar-users`;
-         // URL = API_URL + path;
-         // $.ajax({ 
-         //    type : "GET", 
-         //    url : URL, 
-         //    beforeSend: function(xhr){xhr.setRequestHeader('Authorization', token);},
-         //    success : function(result) { 
-         //       //document.getElementById("first_name").value = result.data[0].attributes.username;
-         //       //console.log(result.data[0].attributes.username);
-               
-         //    }, 
-         //    error : function(result) { 
-         //       console.log("error");
-         //    } 
-         // }); 
-         
-         formEditProfile.onsubmit = async (e) => {
-            e.preventDefault();
-            
-            fetch();
-            fn = formEditProfile.first_name.value;
-            ln = formEditProfile.last_name.value;
-            age = formEditProfile.age.value;
-            desc = formEditProfile.description.value;
-            window.location.assign(`index.html?id=${fn}-${ln}-${age}-${desc}`);
-         };
-         
-      </script>
-   </body>
-</html>
+<html lang="en">
+<head>
+   <title>Ubah My Profile</title>
+</head>
+<!-- {% endblock meta %}
+
+{% block content %} -->
+<body>
+   <h3>Masukkan profile baru:</h3>
+   <form id="formMyProfile">
+     First Name:<br> <input type="text" name="firstName" id="firstName"><br>
+     Last Name:<br> <input type="text" name="lastName" id="lastName">
+     <br>
+     Age:<br> <input type="number" name="age" min="0" value="0" id="age"><br>
+     Description:<br> <input type="text" name="description" id="description"><br>
+     <br>
+     <input type="submit" value="Save Changes" />
+      
+      
+   </form>
+</body>
+<!-- {% endblock content %}
+
+{% block script %} -->
+<script>
+   function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+         const cookies = document.cookie.split(';');
+         for (let i = 0; i < cookies.length; i++) {
+               const cookie = cookies[i].trim();
+               if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+               }
+            }
+         }
+        return cookieValue;
+      }
+   const csrftoken = getCookie('csrftoken');
+   formFocusTimer.onsubmit = async (e) => {
+       e.preventDefault();
+       firstName = formMyProfile.firstName.value;
+       lastName = formMyProfile.lastName.value;
+       age = formMyProfile.age.value;
+       description = formMyProfile.description.value;
+       $.ajax({
+                    url: "/my-profile/session-update",
+                    type: 'POST',
+                    data: {
+                     firstName: firstName,
+                     lastName: lastName,
+                     age: age,
+                     description: description,
+                     csrfmiddlewaretoken: csrftoken
+                  },
+                }).done(function(response) {
+                  Redirect();
+                })
+   };
+   function Redirect() {
+       window.location.assign('/my-profile');
+   }
+ </script>
+<!-- {% endblock script %} -->

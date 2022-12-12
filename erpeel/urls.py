@@ -24,5 +24,5 @@ urlpatterns = [
     path("user/", include('authentication.urls')),
     path("focus-timer/", include('focus_timer.urls')),
     path("events/", include('events.urls')),
-    
+    path("my-profile/", include('my_profile.urls')),
 ]

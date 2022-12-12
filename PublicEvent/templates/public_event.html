@@ -40,7 +40,7 @@
         data.map(function (post) {
             let pub = post.attributes.isPublic;
 
-            if (pub) {
+            if (pub && post.attributes.dibuatOleh.data!=null) {
                 setNama.add(post.attributes.dibuatOleh.data.attributes.nama);
             }
         });

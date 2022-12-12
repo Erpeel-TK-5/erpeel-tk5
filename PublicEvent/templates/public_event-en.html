@@ -39,8 +39,9 @@
 
         data.map(function (post) {
             let pub = post.attributes.isPublic;
-
-            if (pub) {
+            console.log(pub)
+            console.log(post.attributes.dibuatOleh.data)
+            if (pub && post.attributes.dibuatOleh.data!=null) {
                 setNama.add(post.attributes.dibuatOleh.data.attributes.nama);
             }
         });

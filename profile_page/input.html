@@ -5,7 +5,9 @@
          <title>Edit My Profile</title>
       </head>
       <h2>Edit Your Profile Here:</h2>
-      <form id="formEditProfile">
+      <form action="FormEditProfile" method="POST">
+        {% csrf_token %}
+        {{ form }}
         First Name  :<br> <input type="text" name="first_name" id="first_name"><br>
         Last Name   :<br> <input type="text" name="last_name" id="last_name"><br>
         Age         :<br> <input type="number" name="age" min="0" value="0" id="seconds"><br>

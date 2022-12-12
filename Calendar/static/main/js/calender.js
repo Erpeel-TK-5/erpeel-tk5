@@ -15,39 +15,11 @@ async function fetchPosts(nama) {
     )
     let data = await response.json()
     let data2 = await resp.json()
-    calender(data.data.attributes.listEvent.data, data2.data)
+    calender(API_URL,data.data.attributes.listEvent.data, data2.data, nama)
 }
-function calender(data, orangData) {
-    console.log(orangData.attributes)
-    let mapData = new Map()
-    const database = new Map()
-    for (let x in data) {
-        let mulai = new Date(data[x].attributes.startDate)
-        let tahunMulai = mulai.getFullYear()
-        let bulanMulai = mulai.getMonth()
-        let tahunBulan = "year-"+tahunMulai+""+"month-"+bulanMulai
-        let tanggalMulai = mulai.getDate()
-        let judul = data[x].attributes.title
-        let kata = judul+" pukul "+mulai.getHours()+":"+mulai.getMinutes()
-        if (mapData.has(tanggalMulai)) {
-            mapData.get(tanggalMulai).push(kata)
-        }
-        else {
-            mapData.set(tanggalMulai, [kata])
-        }
-        const lol = mapToObj(mapData)
-        database.set(tahunBulan, JSON.stringify(lol))
-        
-    }
-    function mapToObj(map){
-        const obj = {}
-        for (let [k,v] of map)
-          obj[k] = v
-        return obj
-      }
-    
-    
-    console.log(database)
+
+function calender(API_URL, data, orangData, nama) {
+
     var that = this;
     var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var calenderData = {};
@@ -85,6 +57,33 @@ function calender(data, orangData) {
     table.id = "cTable";
     table.className = 'table';
     document.getElementById('table-div').appendChild(table);
+    console.log(orangData.attributes)
+    let mapData = new Map()
+    const database = new Map()
+    for (let x in data) {
+        let mulai = new Date(data[x].attributes.startDate)
+        let tahunMulai = mulai.getFullYear()
+        let bulanMulai = mulai.getMonth()
+        let tahunBulan = "year-"+tahunMulai+""+"month-"+bulanMulai
+        database.set(tahunBulan, {})
+    }
+    for (let x in data) {
+        let mulai = new Date(data[x].attributes.startDate)
+        let tahunMulai = mulai.getFullYear()
+        let bulanMulai = mulai.getMonth()
+        let tahunBulan = "year-"+tahunMulai+""+"month-"+bulanMulai
+        let tanggalMulai = mulai.getDate()
+        let judul = data[x].attributes.title
+        let kata = judul+" pukul "+mulai.getHours()+":"+mulai.getMinutes()
+        let temp = database.get(tahunBulan)
+        if (temp[tanggalMulai] == null) {
+            temp[tanggalMulai] = [kata]
+        }
+        else {
+            temp[tanggalMulai] = temp[tanggalMulai].push(kata)
+        }
+    }
+    
     monthCombo.addEventListener('change', function () {
         calculateDays();
     });
@@ -111,7 +110,7 @@ function calender(data, orangData) {
        */ var storedData = JSON.parse(localStorage.getItem('year-'+that.yearCombo.selectedOptions[0].value+''+'month-'+that.monthCombo.options.selectedIndex));
        var keduaStoredData = null
        if (database.has('year-'+that.yearCombo.selectedOptions[0].value+''+'month-'+that.monthCombo.options.selectedIndex)) {
-        keduaStoredData = JSON.parse(database.get('year-'+that.yearCombo.selectedOptions[0].value+''+'month-'+that.monthCombo.options.selectedIndex))
+        keduaStoredData = database.get('year-'+that.yearCombo.selectedOptions[0].value+''+'month-'+that.monthCombo.options.selectedIndex)
        }
        
        console.log(storedData)
@@ -202,36 +201,55 @@ function calender(data, orangData) {
         })
     })
     var saveBtn = document.getElementsByClassName('save-btn')[0];
+    console.log(that.yearCombo.selectedOptions[0].value+"-"+that.monthCombo.options.selectedIndex+"-"+that.selectedDate+" ")
     saveBtn.addEventListener('click', function () {
         var eventNameVal = that.$eventName.value;
         var fromVal = that.$from.value;
         var toVal = that.$to.value;
-        var tan = that.yearCombo.selectedOptions[0].value+"-"+that.monthCombo.options.selectedIndex+"-"+that.selectedDate+" "
+        var tan = that.yearCombo.selectedOptions[0].value+"-"+(parseInt(that.monthCombo.options.selectedIndex)+1)+"-"+that.selectedDate+" "
+        var akTan;
+        var intFromVal = fromVal.replace(':','')
+        var intToVal = toVal.replace(':','')
+        if (parseInt(intToVal) < parseInt(intFromVal)) {
+            akTan = that.yearCombo.selectedOptions[0].value+"-"+(parseInt(that.monthCombo.options.selectedIndex)+1)+"-"+(parseInt(that.selectedDate)+1)+" "
+        }
+        else {
+            akTan = tan
+        }
         var tanMul = (new Date(`${tan}${fromVal}`))
-        var tanAkh = new Date(`${tan}${toVal}`)
+        var tanAkh = new Date(`${akTan}${toVal}`)
         console.log(that.$isPublic.value)
         console.log(that.$isRecurring.value)
         var pub = (that.$isPublic.value === 'true')
         var rec = (that.$isRecurring.value === 'true')
         var not = that.$notes.value
-        var striData = {"data":orangData}
         var dataJson = {"data":
             {"title":eventNameVal,
             "startDate":tanMul,
             "endDate":tanAkh,
             "isPublic":pub,
             "isRecurring":rec,
-            "notes":not,
-            "dibuatOleh":striData}
+            "notes":not}
         }
-        console.log(JSON.stringify(dataJson))
-        var url = "https://strapi-production-ef0a.up.railway.app/api/events/?populate=*";
-        fetch (url, {
+        var url = `https://strapi-production-ef0a.up.railway.app/api/events/?id=${nama}`;
+        
+        const pal = data.slice()
+        setTimeout(async() => { const rawResponse = await fetch (url, {
             headers: {"Authorization":token,'Content-Type': 'application/json'},
             method: "POST",
             body: JSON.stringify(dataJson)
-        }).then(response => response.json())  // convert to json
-        .then(json => console.log(json))
+        })
+        const contentJson = await rawResponse.json();
+        console.log(contentJson) ;
+        pal.push(contentJson.data);
+        console.log(pal);
+        (fetch(
+            API_URL, {
+                headers: {"Authorization":token,'Content-Type': 'application/json'},
+                method: "PUT",
+                body: JSON.stringify({"data":{"listEvent":pal}}) 
+            }
+        )).then(response => response.json()).then(json=>console.log(json))}, 5000) 
         var content =  eventNameVal + ' ' + 'From'+ ' '+ fromVal +' '+ 'TO' + ''+ toVal +'<br>';
         if( !calenderData[selectedDate]) {
             calenderData[selectedDate] = [];
